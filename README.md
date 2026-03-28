@@ -18,7 +18,7 @@ Designed for [OpenClaw](https://github.com/betaHi/openclaw-searxng-search), but 
 
 ### 1. Add the skill to your project
 
-Copy `skills/searxng-search/SKILL.md` into your project's skill directory.
+Copy `skills/searxng-search/SKILL.md` into your `~/.openclaw/skills` or your project's skill directory.
 
 ### 2. Use it
 

@@ -18,7 +18,7 @@
 
 ### 1. 添加技能到你的项目
 
-将 `skills/searxng-search/SKILL.md` 复制到你项目的技能目录中。
+将 `skills/searxng-search/SKILL.md` 复制到 `~/.openclaw/skills` 或你项目的技能目录中。
 
 ### 2. 使用
 
