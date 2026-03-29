@@ -1,0 +1,44 @@
+# Enable Bing web search explicitly.
+# It may not be preserved reliably by keep_only alone.
+engines:
+  - disabled: false
+    name: bing
+
+# Outgoing request settings (SearXNG -> search engines)
+outgoing:
+  enable_http2: true          # Use HTTP/2 when available for better performance
+  request_timeout: 5.0        # Give upstream engines at most 5 seconds to respond
+
+# Search behavior
+search:
+  autocomplete: google        # Use Google for query autocomplete suggestions
+  default_lang: zh            # Default search language: Chinese
+  formats:                    # Keep both UI and API formats enabled
+    - html                    # Browser UI
+    - json                    # JSON API for agents and scripts
+  safe_search: 1              # 0=off, 1=moderate, 2=strict
+
+# Server settings
+server:
+  image_proxy: true           # Proxy remote images through SearXNG for privacy
+  limiter: false              # Fine for personal use; enable for public deployments
+  secret_key: YOUR_RANDOM_SECRET_KEY  # Replace this with a real random secret in production
+
+# Frontend settings
+ui:
+  static_use_hash: true       # Add hashes to static assets to avoid stale caches
+
+# Engine allowlist (core safety setting)
+use_default_settings:
+  engines:
+    keep_only:                # Keep only the engines below and disable the rest
+      - google                # Google web search
+      - google images         # Google Images
+      - google news           # Google News
+      - google videos         # Google Videos
+      - google scholar        # Google Scholar
+      - bing                  # Bing web search
+      - bing images           # Bing Images
+      - bing news             # Bing News
+      - bing videos           # Bing Videos
+      - wikipedia             # Wikipedia
