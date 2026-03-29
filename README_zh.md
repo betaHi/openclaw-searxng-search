@@ -106,6 +106,57 @@ sudo docker run -d \
   searxng/searxng
 ```
 
+## 推荐配置
+
+下面这份配置比上面的最小示例更适合作为个人使用的起点。
+它保留了 JSON API，限制了可用搜索引擎，并增加了一些更稳妥的隐私和内容过滤默认值。
+
+```yml
+# 单独启用 Bing 通用搜索（因为 keep_only 不一定能稳定保留它，建议手动开启）
+engines:
+  - disabled: false
+    name: bing
+
+# 出站请求配置（SearXNG -> 搜索引擎）
+outgoing:
+  enable_http2: true          # 尽量使用 HTTP/2，通常比 HTTP/1.1 更快
+  request_timeout: 5.0        # 最多等待搜索引擎响应 5 秒，超时就放弃
+
+# 搜索行为配置
+search:
+  autocomplete: google        # 输入框自动补全建议来自 Google
+  default_lang: zh            # 默认搜索语言：中文
+  formats:                    # 同时保留网页界面和 JSON API
+    - html                    # 浏览器访问使用
+    - json                    # Agent / 脚本调用必须保留
+  safe_search: 1              # 安全搜索：0=关闭，1=适度过滤，2=严格
+
+# 服务器配置
+server:
+  image_proxy: true           # 图片通过 SearXNG 代理加载，减少隐私泄露
+  limiter: false              # 自用可关闭；公开部署建议开启
+  secret_key: YOUR_RANDOM_SECRET_KEY  # 生产环境务必替换成随机字符串
+
+# 前端界面配置
+ui:
+  static_use_hash: true       # 静态资源加 hash，避免缓存旧文件
+
+# 引擎白名单（核心安全配置）
+use_default_settings:
+  engines:
+    keep_only:                # 只保留以下引擎，其余全部禁用
+      - google                # Google 网页搜索
+      - google images         # Google 图片
+      - google news           # Google 新闻
+      - google videos         # Google 视频
+      - google scholar        # Google 学术
+      - bing                  # Bing 网页搜索
+      - bing images           # Bing 图片
+      - bing news             # Bing 新闻
+      - bing videos           # Bing 视频
+      - wikipedia             # 维基百科
+```
+
 ## 许可证
 
 MIT
